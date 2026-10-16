@@ -1,8 +1,8 @@
 # Bravely
 
-Bravely is a Brave extension for visual browsing on Google Lens, Pinterest, DeviantArt and pixiv. It turns supported pages into quiet, dark image walls with compact gaps, full-size image actions and visual-search shortcuts.
+Bravely is the optional Brave extension companion to **Pinfull**. When you send an image from Pinfull to Google Lens, Bravely carries the same quiet image-wall experience into Lens visual matches. It also brings dark walls, full-size image actions and visual-search shortcuts to Pinterest, DeviantArt and pixiv.
 
-It is the visual browsing companion to **Pinfull**, a customized Pinless fork. Both can run independently. Pinfull's Google Lens image links can use Bravely's image-upload route without configuring a local server address in the extension.
+Pinfull is a customized Pinless fork. On an image or GIF, its blue strip or **G while hovering** opens Google Lens; on a video, the blue strip opens the pin page. Both apps work independently. Pinfull's Google Lens image links can use Bravely's image-upload route without configuring a local server address in the extension.
 
 **Status: public development preview, version 0.14.0.** This repository was extracted from the working Lens Wall extension. It is not a verified public release. See [release preparation](docs/RELEASE_PREPARATION.md) and [source provenance](NOTICE.md).
 

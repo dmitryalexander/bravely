@@ -16,7 +16,8 @@ Target: public `dmitryalexander/bravely`. The owner chose public visibility on O
 ## Before a public release
 
 - [ ] Review source provenance and choose a suitable project license; retain any required upstream notices.
-- [ ] Review broad host access and document/reduce it according to shipped functionality.
+- [x] Reduce required host access; make broad HTTPS and localhost access optional and off by default (0.14.0).
+- [ ] Verify real Brave optional-permission prompts, declined grants, revocation and upgrade behavior; automated API simulations pass.
 - [ ] Load the packaged copy as an extension in Brave with Lens Wall disabled.
 - [ ] Verify options saving, defaults, look toggles and extension reload behavior.
 - [ ] Check Lens Visual matches, source/full-size actions and crop editing.

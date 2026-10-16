@@ -21,6 +21,10 @@ for (const html of ['options.html', 'submit.html']) {
     assert.ok(fs.existsSync(path.join(root, match[1])), `Missing page script: ${match[1]}`);
   }
 }
+const background = fs.readFileSync(path.join(root, manifest.background.service_worker), 'utf8');
+for (const match of background.matchAll(/importScripts\('([^']+)'\)/g)) {
+  assert.ok(fs.existsSync(path.join(root, match[1])), `Missing worker dependency: ${match[1]}`);
+}
 function run(args) {
   const result = spawnSync(process.execPath, args, {cwd: root, stdio: 'inherit'});
   if (result.error) throw result.error;

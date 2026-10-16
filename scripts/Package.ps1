@@ -3,7 +3,7 @@ $taskRoot = Split-Path -Parent $PSScriptRoot
 & node (Join-Path $PSScriptRoot 'check.cjs')
 if ($LASTEXITCODE -ne 0) { throw 'Checks failed; no package created.' }
 $taskManifest = Get-Content -LiteralPath (Join-Path $taskRoot 'manifest.json') -Raw | ConvertFrom-Json
-$taskFiles = @('manifest.json', 'options.html', 'options.js', 'submit.html', 'submit.js', $taskManifest.background.service_worker)
+$taskFiles = @('manifest.json', 'access.js', 'options.html', 'options.js', 'submit.html', 'submit.js', $taskManifest.background.service_worker)
 foreach ($taskScript in $taskManifest.content_scripts) { $taskFiles += @($taskScript.js); $taskFiles += @($taskScript.css) }
 foreach ($taskResource in $taskManifest.web_accessible_resources) { $taskFiles += @($taskResource.resources) }
 $taskFiles = @($taskFiles | Where-Object { $_ } | Sort-Object -Unique)

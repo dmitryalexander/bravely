@@ -4,7 +4,7 @@ Bravely is a Brave extension for visual browsing on Google Lens, Pinterest, Devi
 
 It is the visual browsing companion to **Pinfull**, a customized Pinless fork. Both can run independently. Pinfull's Google Lens image links can use Bravely's image-upload route without configuring a local server address in the extension.
 
-**Status: public development preview, version 0.13.0.** This repository was extracted from the working Lens Wall extension. It is not a verified public release. See [release preparation](docs/RELEASE_PREPARATION.md) and [source provenance](NOTICE.md).
+**Status: public development preview, version 0.14.0.** This repository was extracted from the working Lens Wall extension. It is not a verified public release. See [release preparation](docs/RELEASE_PREPARATION.md) and [source provenance](NOTICE.md).
 
 ## Install in Brave
 
@@ -13,7 +13,7 @@ It is the visual browsing companion to **Pinfull**, a customized Pinless fork. B
 3. Select **Load unpacked** and choose the folder containing `manifest.json`.
 4. Open or refresh a supported website. Use **Details > Extension options** to change each site's look and image actions.
 
-For an installation archive on Windows, run `powershell -NoProfile -File scripts/Package.ps1`. Extract the generated `dist/bravely-0.13.0-unpacked.zip`, then load the extracted folder as above. The archive contains runtime files only.
+For an installation archive on Windows, run `powershell -NoProfile -File scripts/Package.ps1`. Extract the generated `dist/bravely-0.14.0-unpacked.zip`, then load the extracted folder as above. The archive contains runtime files only.
 
 If you already have Lens Wall installed, disable that extension before enabling Bravely on the same sites. Running both can duplicate page modifications. Loading a separate unpacked folder normally creates a separate extension identity, so its settings may start from defaults. Keep the old copy until the new one has been checked.
 
@@ -37,7 +37,14 @@ If a supported site looks completely normal, check its look switch first. The or
 
 Bravely uses `storage` for extension preferences and `declarativeNetRequest` to route Lens uploads and supply pixiv's image-server referrer. Content scripts run on the supported Google Lens/search, Pinterest, DeviantArt and pixiv URLs listed in the manifest.
 
-The current preview retains broad HTTPS host access because full-size image discovery follows result pages and image hosts across the web. Loopback host access supports image URLs from local companion apps. These permissions need a final review before public release.
+Required host access is limited to Google Lens/search, the supported art sites and their image servers. In **Extension options > Optional access**, two extra permissions start **off**:
+
+- **Find images on other websites** requests access to other HTTPS sites for full-size discovery and Lens uploads.
+- **Use images from local companion apps** requests HTTP access to `localhost` and `127.0.0.1` for local image endpoints.
+
+Enable a switch yourself and approve the browser permission request to activate it. There are no automatic permission prompts on install, page load or failed image requests. Declining leaves access off; switching off revokes the optional permission. Opt-ins are stored locally, not synced between installations. Upgrading from 0.13.0 removes unselected legacy broad grants rather than treating them as approval.
+
+With extras off, the supported image servers still work. Other full-size lookups may keep the thumbnail, and blocked Lens image sources show an explanation and an options button. Ordinary Pinfull links to Pinterest-hosted images need no localhost permission. Failed local-image requests never fall back to sending the local URL to Google. Extension fetches reject redirects to avoid silently crossing the selected access boundary, so sources requiring redirects may keep their thumbnail even with extra access enabled.
 
 Selecting a Lens action sends the selected image to Google Lens: Bravely fetches the image and submits it to Google's upload endpoint. Full-size actions can request a source page and candidate images to find a larger match. Website browsing, authentication and Google's processing are handled by those services. Debug logging is off by default; enabling it can print page markup in the browser console.
 

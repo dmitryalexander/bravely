@@ -4,6 +4,8 @@
 (() => {
   'use strict';
   const msg = document.getElementById('msg');
+  const accessOptions = document.getElementById('access-options');
+  accessOptions.addEventListener('click', () => chrome.runtime.openOptionsPage());
   const src = new URLSearchParams(location.search).get('url') || '';
   const key = 'lw-sent:' + src;
   const viaGoogle = () => location.replace('https://lens.google.com/uploadbyurl?lw=1&url=' + encodeURIComponent(src));
@@ -29,7 +31,7 @@
     if (!/^https?:\/\//i.test(src)) { msg.textContent = 'No image address was given.'; return; }
     if (alreadySent()) return;
     try {
-      const res = await fetch(src, { credentials: 'omit', headers: { Accept: 'image/webp,image/png,image/jpeg,image/gif,image/*;q=0.8' } });
+      const res = await BravelyAccess.fetch(src, { credentials: 'omit', headers: { Accept: 'image/webp,image/png,image/jpeg,image/gif,image/*;q=0.8' } });
       const type = (res.headers.get('content-type') || '').split(';')[0].trim().toLowerCase();
       if (!res.ok || !type.startsWith('image/')) throw new Error('not an image');
       let blob = await res.blob();
@@ -50,7 +52,18 @@
       document.body.append(form);
       try { sessionStorage.setItem(key, '1'); } catch (_) {}
       form.submit();
-    } catch (_) {
+    } catch (error) {
+      if (error.name === 'BravelyAccessDenied') {
+        msg.textContent = error.message;
+        accessOptions.hidden = false;
+        return;
+      }
+      // A failed local request must not disclose a local address to Google as a fallback.
+      const host = new URL(src).hostname;
+      if (host === 'localhost' || host.endsWith('.localhost') || /^127\./.test(host) || host === '[::1]') {
+        msg.textContent = 'The local image could not be loaded. Check that your companion app is running.';
+        return;
+      }
       viaGoogle(); // couldn't get the image ourselves: let Google try to download it
     }
   }

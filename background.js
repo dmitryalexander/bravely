@@ -1,3 +1,4 @@
+importScripts('access.js');
 // Red strip: open the full-size image in a new tab.
 // The thumbnail opens at once; we then find the real image on the source page by
 // fingerprint-matching its candidate images against the thumbnail, and swap it in.
@@ -9,7 +10,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function get(url, opts = {}, ms = 7000) {
   const ctl = new AbortController();
   const t = setTimeout(() => ctl.abort(), ms);
-  try { return await fetch(url, { credentials: 'omit', redirect: 'follow', signal: ctl.signal, ...opts }); }
+  try { return await BravelyAccess.fetch(url, { credentials: 'omit', signal: ctl.signal, ...opts }); }
   finally { clearTimeout(t); }
 }
 function abs(u, base) {
@@ -110,7 +111,7 @@ async function findFull(page, hint, thumb) {
   const left = () => DEADLINE_MS - (Date.now() - t0);
   // Reference fingerprint from the thumbnail.
   let ref = null;
-  try { const b = await (await fetch(thumb)).blob(); ref = await fingerprint(b); } catch (_) {}
+  try { const b = await (await get(thumb)).blob(); ref = await fingerprint(b); } catch (_) {}
 
   // Candidates: hint from Google's card, site APIs, page metadata/body.
   const cands = [];
@@ -234,6 +235,9 @@ async function routeLensUploads() {
     });
   } catch (e) { console.warn('[Bravely] Lens upload route not set:', e); }
 }
-chrome.runtime.onInstalled.addListener(routeLensUploads);
+chrome.runtime.onInstalled.addListener(async () => {
+  try { await BravelyAccess.resetUnselected(); } catch (e) { console.warn('[Bravely] Access reset:', e); }
+  await routeLensUploads();
+});
 chrome.runtime.onStartup.addListener(routeLensUploads);
 routeLensUploads();

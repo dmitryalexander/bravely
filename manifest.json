@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Bravely",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "Dark image walls for Google Lens, Pinterest, DeviantArt and pixiv. Full-size images and Lens search. A Pinfull companion.",
   "permissions": [
     "storage",
@@ -127,9 +127,18 @@
     "service_worker": "background.js"
   },
   "host_permissions": [
-    "https://*/*",
-    "http://localhost/*",
-    "http://127.0.0.1/*"
+    "https://www.google.com/*",
+    "https://lens.google.com/*",
+    "https://*.gstatic.com/*",
+    "https://*.googleusercontent.com/*",
+    "https://*.pinterest.com/*",
+    "https://*.pinimg.com/*",
+    "https://*.deviantart.com/*",
+    "https://*.wixmp.com/*",
+    "https://*.deviantart.net/*",
+    "https://www.pixiv.net/*",
+    "https://pixiv.net/*",
+    "https://*.pximg.net/*"
   ],
   "web_accessible_resources": [
     {
@@ -141,5 +150,10 @@
       ]
     }
   ],
-  "version_name": "0.13.0 preparation preview"
+  "version_name": "0.14.0 development preview",
+  "optional_host_permissions": [
+    "https://*/*",
+    "http://localhost/*",
+    "http://127.0.0.1/*"
+  ]
 }

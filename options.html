@@ -5,6 +5,16 @@ label{display:block;margin:18px 0 6px}button{margin-top:16px;padding:9px 16px;bo
 small{color:#aaa}</style>
 <h1>Bravely</h1>
 <p>A visual browsing companion to Pinfull. These switches control the look on each site.</p>
+<section aria-labelledby="access-title">
+<h2 id="access-title">Optional access</h2>
+<p>Both switches start off. Enable one only if you want the extra features. Your browser will ask you to approve access.</p>
+<label><input type="checkbox" id="access-web" style="width:auto"> Find images on other websites</label>
+<small>Allows access to other HTTPS websites for full-size image discovery and Lens uploads. With this off, supported sites and their image servers still work; other results may keep their thumbnail.</small>
+<label><input type="checkbox" id="access-local" style="width:auto"> Use images from local companion apps</label>
+<small>Allows image requests to localhost and 127.0.0.1 over HTTP, for apps running on this computer. Ordinary Pinfull links to Pinterest images do not need this.</small>
+<p id="access-status" role="status" aria-live="polite"></p>
+<small>These switches apply immediately and are specific to this installation. Switching off revokes the optional access. Basic access to supported sites is required for Bravely's normal features.</small>
+</section>
 <label><input type="checkbox" id="pinless" style="width:auto"> Bravely look on Pinterest (dark, tight image wall, no side bar, no panel next to a pin)</label>
 <small>Ctrl+Shift+X on Pinterest switches it too. Open Pinterest tabs reload when it changes.</small><br>
 <label><input type="checkbox" id="daLook" style="width:auto"> Bravely look on DeviantArt (dark, tight picture wall, nothing on the pictures, art pages without the side panel)</label>
@@ -19,4 +29,5 @@ small{color:#aaa}</style>
 <small>The red strip always opens the original picture.</small><br>
 <label><input type="checkbox" id="debug" style="width:auto"> Log card markup to the console (for troubleshooting)</label>
 <button id="save">Save</button> <span id="msg" role="status"></span>
+<script src="access.js"></script>
 <script src="options.js"></script>

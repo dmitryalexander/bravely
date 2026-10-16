@@ -51,8 +51,18 @@
       form.hidden = true;
       document.body.append(form);
       try { sessionStorage.setItem(key, '1'); } catch (_) {}
+      const jobParams = new URLSearchParams(location.search);
+      if (jobParams.has('pinful_job')) {
+        const ownTab = await chrome.tabs.getCurrent();
+        const registered = await chrome.runtime.sendMessage({type:'pinfulLensStart',tabId:ownTab.id,job:jobParams.get('pinful_job'),origin:jobParams.get('pinful_origin'),popup:jobParams.get('pinful_popup')==='1'});
+        if (!registered?.ok) throw new Error('Could not connect the Lens search to Pinful.');
+      }
       form.submit();
     } catch (error) {
+      if (new URLSearchParams(location.search).has('pinful_job')) {
+        msg.textContent = 'Could not start the Pinful Lens search. ' + (error.message || 'Reload Bravely and try again.');
+        return;
+      }
       if (error.name === 'BravelyAccessDenied') {
         msg.textContent = error.message;
         accessOptions.hidden = false;

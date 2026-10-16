@@ -24,9 +24,16 @@ Target: public `dmitryalexander/bravely`. The owner chose public visibility on O
 - [ ] Check Pinterest signed in and logged out: wall, pin panel, related pins, scrolling and two-step visual search.
 - [ ] Check DeviantArt home/search/gallery/artwork and authenticated Watch/scrolling where accessible.
 - [ ] Check pixiv home/search/artwork/bookmarks, page continuation, original images and Lens actions.
-- [ ] Check Pinfull Lens actions with and without Bravely enabled.
+- [ ] Check Pinful Lens actions with and without Bravely enabled.
 - [x] Add owner-supplied, visually reviewed non-adult examples for Pinterest, Google Lens, DeviantArt and pixiv to the README.
-- [ ] Add final extension artwork/icons if desired.
+- [x] Add approved thin amber-and-black lion artwork/icons with source attribution.
 - [ ] Reinstall from the final archive, record actual manual results, and create a release version/tag.
 
 Inherited tests simulate site behavior; they do not certify the current sites or this packaged extension. The owner confirmed the original Lens Wall DeviantArt artwork appearance after turning its look back on; that is not a full verification of this preparation copy.
+
+Pinful Lens bridge0.15.0 is implemented locally with scoped helper-tab registration/return and no new host permissions. Browser bridge mocks and all existing checks pass. A full installed-browser roundtrip is pending because computer-use could not verify the current Brave URL; do not mark this manual release check complete.
+
+
+## 0.17.1 source update
+
+The owner confirmed the previously missing Lens result now remains in the wall. Ten local harnesses cover current runtime behavior, including distinct thumbnails sharing a source and visible images with hidden destination links. This source push is a development-preview update, not a stable release/tag. Current Pinful removed the older scoped jobs/callback UI, so that legacy integration is no longer a requirement or a claim of compatibility with current Pinful. Bravely's ordinary walls and image-search actions remain independent.

@@ -8,7 +8,7 @@ assert.equal(manifest.name, 'Bravely');
 assert.equal(manifest.manifest_version, 3);
 assert.equal(manifest.version, require('../package.json').version);
 assert.ok(manifest.description.length <= 132, 'Manifest description exceeds Chrome limit');
-const entries = [manifest.background.service_worker, manifest.options_ui.page,
+const entries = [...Object.values(manifest.icons || {}), manifest.background.service_worker, manifest.options_ui.page,
   ...manifest.content_scripts.flatMap(s => [...(s.js || []), ...(s.css || [])]),
   ...manifest.web_accessible_resources.flatMap(r => r.resources)];
 for (const file of entries) {

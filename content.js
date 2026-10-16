@@ -172,6 +172,10 @@
       const own = el.closest && el.closest('a[href]');
       if (own && !root.contains(own)) { const u = unwrap(own.getAttribute('href')); if (u) return { url: u, el: own, a: own }; }
       if (el.querySelectorAll) {
+        // Do not borrow the first link from a neighboring result card.
+        const pictures = [...el.querySelectorAll('img')].filter(i =>
+          !root.contains(i) && (i.naturalWidth || i.width) >= 90 && (i.naturalHeight || i.height) >= 90);
+        if (pictures.length > 1) break;
         for (const a of el.querySelectorAll('a[href]')) {
           if (root.contains(a)) continue;
           const u = unwrap(a.getAttribute('href'));
@@ -193,20 +197,23 @@
       if (!src || /^data:image\/gif;base64,R0lGODlhAQAB/.test(src)) continue;
       const r = resultFor(img);
       const found = r ? null : linkFor(img);
-      if (!r && !found) continue;
-      const url = r ? r.page : found.url;
-      if (seen.has(url)) continue;
-      seen.add(url);
+      // Google's visible thumbnail is still useful when its source link is
+      // available only through Google's own click handler.
+      const url = r ? r.page : found ? found.url : location.href;
+      // A single source post can contain several different result images.
+      const imageKey = src + '\n' + url;
+      if (seen.has(imageKey)) continue;
+      seen.add(imageKey);
       added++;
-      if (DEBUG) console.log('[Bravely] card', url, r || (found.el.outerHTML || '').slice(0, 4000));
-      let title = (img.alt || '').trim(), site = '';
+      if (DEBUG) console.log('[Bravely] card', url, r || (found?.el.outerHTML || '').slice(0, 4000));
+      let title = (img.alt || '').trim(), site = !r && !found ? 'Google result' : '';
       if (r) title = r.title || title;
-      else if (viaGoogle(url)) {
+      else if (found && viaGoogle(url)) {
         const lines = ((found.a && found.a.innerText) || '').split('\n').map(x => x.trim()).filter(Boolean);
         site = lines[0] || ''; title = lines.slice(1).join(' ') || title;
-      } else title = (found.el.getAttribute?.('aria-label') || title).trim();
+      } else if (found) title = (found.el.getAttribute?.('aria-label') || title).trim();
       const webThumb = /^https:/.test(src) ? src : (r && r.thumb) || null;
-      addTile(src, url, w, h, title, r ? r.full : findHint(found.el), { site, webThumb });
+      addTile(src, url, w, h, title, r ? r.full : findHint(found?.el), { site, webThumb });
     }
     if (added) status.textContent = '';
     return added;

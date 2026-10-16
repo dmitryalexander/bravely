@@ -1,0 +1,28 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const store={},updates=[];let listener;
+const extension='a'.repeat(32),job='b'.repeat(48);
+const chrome={runtime:{id:extension,getURL:p=>'chrome-extension://'+extension+'/'+p.replace(/^\//,''),onMessage:{addListener:fn=>listener=fn}},storage:{session:{get:async key=>({[key]:store[key]}),set:async value=>Object.assign(store,value),remove:async key=>delete store[key]}},tabs:{update:async(id,value)=>updates.push({id,...value})}};
+vm.runInNewContext(fs.readFileSync('pinful-bridge-worker.js','utf8').replace(/^\uFEFF/,''),{chrome,URL,Date});
+const send=(message,sender)=>new Promise(resolve=>{if(listener(message,sender,resolve)!==true)resolve(undefined);});
+(async()=>{
+ const tab={id:7},google={tab,url:'https://www.google.com/search?udm=44'},pinterest={tab,url:'https://jp.pinterest.com/pin/123/'},submit={url:chrome.runtime.getURL('submit.html')+'?url=public-image'};
+ assert.equal(Object.keys(await send({type:'pinfulLensContext'},google)).length,0);
+ assert.equal((await send({type:'pinfulLensStart',tabId:7,job,origin:'https://evil.example'},submit)).error,'Invalid Lens job');
+ assert.equal((await send({type:'pinfulLensStart',tabId:7,job,origin:'http://127.0.0.1:3001',popup:true},submit)).ok,true);
+ assert.equal((await send({type:'pinfulLensContext'},google)).stage,'google');
+ assert.equal(Object.keys(await send({type:'pinfulPinterestContext'},pinterest)).length,0);
+ assert.equal(Object.keys(await send({type:'pinfulLensContext'},{tab:{id:8},url:google.url})).length,0);
+ const result=await send({type:'pinfulLensResults',results:[{page:'https://pinterest.com.evil.example/pin/123/'},{page:pinterest.url},{page:'https://www.pinterest.com/lalunchpatty/board/'}]},google);
+ assert.equal(result.count,2);assert.equal(updates[0].url,pinterest.url,'helper must visit Pinterest before returning');
+ assert.equal((await send({type:'pinfulPinterestContext'},pinterest)).job,job);
+ assert.equal(Object.keys(await send({type:'pinfulPinterestContext'},{tab,url:'https://evil.example/'})).length,0);
+ const image='https://i.pinimg.com/736x/ffffffffffffffffffffffffffffffff.jpg';
+ const returned=await send({type:'pinfulPinterestResults',pins:[{image,page:'https://www.pinterest.com/pin/456/',title:'Collected image',width:300,height:400},{image:'http://localhost/private.jpg'}]},pinterest);
+ assert.equal(returned.count,1);assert.ok(updates[1].url.startsWith('http://127.0.0.1:3001/lens-return#'));
+ const payload=JSON.parse(decodeURIComponent(updates[1].url.split('#')[1]));assert.equal(payload.page,pinterest.url);assert.equal(payload.pins.length,1);assert.equal(payload.job,job);assert.equal(payload.popup,true);
+ assert.equal(Object.keys(await send({type:'pinfulPinterestContext'},pinterest)).length,0);
+ await send({type:'pinfulLensStart',tabId:7,job,origin:'http://127.0.0.1:3001'},submit);
+ await send({type:'pinfulLensResults',results:[],redirects:['https://evil.example/goto?url=x','https://www.google.com/goto?url=encoded-pinterest-destination']},google);
+ assert.equal(updates.at(-1).url,'https://www.google.com/goto?url=encoded-pinterest-destination');
+ console.log('PASS: scoped Lens -> regional Pinterest -> collected image callback; filtering, encrypted Google redirects and cleanup.');
+})().catch(error=>{console.error(error);process.exit(1);});

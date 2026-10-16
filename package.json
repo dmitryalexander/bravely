@@ -1,10 +1,12 @@
 {
   "name": "bravely",
-  "version": "0.14.0",
+  "version": "0.17.1",
   "private": true,
   "description": "Pinfull's optional companion extension for Brave: image walls and visual search",
   "scripts": {
     "test": "node scripts/check.cjs"
   },
-  "engines": { "node": ">=22" }
+  "engines": {
+    "node": ">=22"
+  }
 }

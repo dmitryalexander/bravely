@@ -241,3 +241,5 @@ chrome.runtime.onInstalled.addListener(async () => {
 });
 chrome.runtime.onStartup.addListener(routeLensUploads);
 routeLensUploads();
+
+importScripts('pinful-bridge-worker.js');

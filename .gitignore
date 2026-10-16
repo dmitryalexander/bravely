@@ -9,3 +9,6 @@ test-results/
 *.zip
 .DS_Store
 Thumbs.db
+
+# Rejected icon drafts stay local.
+icons/*-previous.*

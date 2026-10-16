@@ -1,3 +1,21 @@
+# 0.17.1
+
+Keep distinct visible Lens thumbnails from a shared source page and thumbnails without an extractable destination. Avoid assigning a neighboring card's source link. The owner confirmed the missing-image case was fixed. Approved thin amber lion icon; existing permissions unchanged.
+
+Current Pinful no longer uses the older scoped Lens-job bridge. Bravely remains independent; legacy bridge scripts are inactive without an explicitly registered older helper job.
+
+# 0.17.0
+
+Pinful helpers now open the Pinterest visual match and return its loaded image grid. Handles regional Pinterest links and encrypted Google destination links. No exact-image requirement or recommendations API is needed to import the page images. Companion permissions and amber lion icon unchanged.
+
+# 0.16.1
+
+Replace the falcon with an amber Brave lion outline matching the companion app icons.
+
+# 0.16.0
+
+Amber falcon/lens icon; corrected displayed version. Pinful Lens helpers read Google result metadata and standard Pinterest links without waiting for the custom wall, and retry failed returns.
+
 # Changelog
 
 ## 0.14.0 development preview
@@ -19,3 +37,10 @@
 - Added installation instructions, permission notes, preparation tracking and a runtime-only archive script.
 
 This preview has no public release tag. Installed-extension verification remains open.
+
+
+## 0.15.0 — October 16, 2026
+
+- Add Pinful's explicit Lens-search job handoff and Pinterest result return.
+- Keep ordinary Lens searches independent; no new host grants.
+- Add scoped helper-tab and callback tests. Full real-browser verification pending.

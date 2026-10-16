@@ -1,10 +1,10 @@
 # Bravely
 
-Bravely is **Pinfull's optional companion extension for Brave**. When you send an image from Pinfull to Google Lens, Bravely carries the same quiet image-wall experience into Lens visual matches. It also brings dark walls, full-size image actions and visual-search shortcuts to Pinterest, DeviantArt and pixiv.
+Bravely is **Pinful's optional companion extension for Brave**. When you send an image from Pinful to Google Lens, Bravely carries the same quiet image-wall experience into Lens visual matches. It also brings dark walls, full-size image actions and visual-search shortcuts to Pinterest, DeviantArt and pixiv.
 
-Pinfull is a customized Pinless fork. On an image or GIF, its blue strip or **G while hovering** opens Google Lens; on a video, the blue strip opens the pin page. Both apps work independently. Pinfull's Google Lens image links can use Bravely's image-upload route without configuring a local server address in the extension.
+Pinful is a customized Pinless fork. On an image or GIF, its blue strip or **G while hovering** opens Google Lens; on a video, the blue strip opens the pin page. Both apps work independently. Pinful's Google Lens image links can use Bravely's image-upload route without configuring a local server address in the extension.
 
-**Status: public development preview, version 0.14.0.** This repository was extracted from the working Lens Wall extension. It is not a verified public release. See [release preparation](docs/RELEASE_PREPARATION.md) and [source provenance](NOTICE.md).
+**Status: public development preview, version 0.17.1.** This repository was extracted from the working Lens Wall extension. It is not a verified public release. See [release preparation](docs/RELEASE_PREPARATION.md) and [source provenance](NOTICE.md).
 
 ## In action
 
@@ -18,7 +18,7 @@ Pikachu search results in the dark image wall.
 
 ### Google Lens
 
-Visual matches in the wall view, continuing the image-search workflow from Pinfull.
+Visual matches in the wall view, continuing the image-search workflow from Pinful.
 
 ![Google Lens visual matches showing Pikachu and Eevee in the image wall](docs/screenshots/google-lens.png)
 
@@ -74,7 +74,7 @@ Required host access is limited to Google Lens/search, the supported art sites a
 
 Enable a switch yourself and approve the browser permission request to activate it. There are no automatic permission prompts on install, page load or failed image requests. Declining leaves access off; switching off revokes the optional permission. Opt-ins are stored locally, not synced between installations. Upgrading from 0.13.0 removes unselected legacy broad grants rather than treating them as approval.
 
-With extras off, the supported image servers still work. Other full-size lookups may keep the thumbnail, and blocked Lens image sources show an explanation and an options button. Ordinary Pinfull links to Pinterest-hosted images need no localhost permission. Failed local-image requests never fall back to sending the local URL to Google. Extension fetches reject redirects to avoid silently crossing the selected access boundary, so sources requiring redirects may keep their thumbnail even with extra access enabled.
+With extras off, the supported image servers still work. Other full-size lookups may keep the thumbnail, and blocked Lens image sources show an explanation and an options button. Ordinary Pinful links to Pinterest-hosted images need no localhost permission. Failed local-image requests never fall back to sending the local URL to Google. Extension fetches reject redirects to avoid silently crossing the selected access boundary, so sources requiring redirects may keep their thumbnail even with extra access enabled.
 
 Selecting a Lens action sends the selected image to Google Lens: Bravely fetches the image and submits it to Google's upload endpoint. Full-size actions can request a source page and candidate images to find a larger match. Website browsing, authentication and Google's processing are handled by those services. Debug logging is off by default; enabling it can print page markup in the browser console.
 
@@ -103,3 +103,19 @@ When reporting a bug, include the site/page type, whether you were signed in, Br
 - Final extension artwork/icons, license selection and provenance review remain preparation work.
 
 No public release tag is provided by this preparation snapshot.
+
+
+## Pinful compatibility
+
+Bravely and [Pinful](https://github.com/dmitryalexander/pinful) work independently. Pinful's blue image strip or G shortcut opens Google Lens, where Bravely can show its wall. Pinful now handles empty pin pages using previous-page images and does not require Bravely for normal browsing.
+
+The scoped helper scripts introduced in earlier previews remain for compatibility with older Pinful Lens jobs. Current Pinful has removed those jobs and callbacks; that legacy automatic handoff is inactive. Ordinary Lens searches do not send collected results back to Pinful.
+
+## Changes in 0.17.1
+
+- Keep distinct visible thumbnails that share the same source-page URL.
+- Keep a visible result when Google exposes no extractable source link; its source action returns to Google's result page.
+- Avoid borrowing a neighboring image's source link.
+- Use the approved thin amber-and-black lion icon.
+
+The owner confirmed the previously missing Google Lens image remains visible after this fix. Automated checks cover the collector cases; this is not a complete certification of all supported website layouts.

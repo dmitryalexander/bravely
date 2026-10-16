@@ -1,6 +1,6 @@
 # Release preparation
 
-Target: private `dmitryalexander/bravely`. The owner selected private visibility on October 16, 2026. Repository creation/push must be verified separately from this local checklist.
+Target: public `dmitryalexander/bravely`. The owner chose public visibility on October 16, 2026, superseding the earlier private preference. This is a development preview, with public-release preparation still open.
 
 ## Completed locally
 

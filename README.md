@@ -4,7 +4,7 @@ Bravely is a Brave extension for visual browsing on Google Lens, Pinterest, Devi
 
 It is the visual browsing companion to **Pinfull**, a customized Pinless fork. Both can run independently. Pinfull's Google Lens image links can use Bravely's image-upload route without configuring a local server address in the extension.
 
-**Status: private preparation preview, version 0.13.0.** This repository was extracted from the working Lens Wall extension. It is not a verified public release. See [release preparation](docs/RELEASE_PREPARATION.md) and [source provenance](NOTICE.md).
+**Status: public development preview, version 0.13.0.** This repository was extracted from the working Lens Wall extension. It is not a verified public release. See [release preparation](docs/RELEASE_PREPARATION.md) and [source provenance](NOTICE.md).
 
 ## Install in Brave
 

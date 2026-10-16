@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Bravely",
   "version": "0.14.0",
-  "description": "Dark image walls for Google Lens, Pinterest, DeviantArt and pixiv. Full-size images and Lens search. A Pinfull companion.",
+  "description": "Pinfull's optional companion: image walls and visual-search tools for Google Lens, Pinterest, pixiv and DeviantArt.",
   "permissions": [
     "storage",
     "declarativeNetRequest"

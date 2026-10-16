@@ -1,10 +1,40 @@
 # Bravely
 
-Bravely is the optional Brave extension companion to **Pinfull**. When you send an image from Pinfull to Google Lens, Bravely carries the same quiet image-wall experience into Lens visual matches. It also brings dark walls, full-size image actions and visual-search shortcuts to Pinterest, DeviantArt and pixiv.
+Bravely is **Pinfull's optional companion extension for Brave**. When you send an image from Pinfull to Google Lens, Bravely carries the same quiet image-wall experience into Lens visual matches. It also brings dark walls, full-size image actions and visual-search shortcuts to Pinterest, DeviantArt and pixiv.
 
 Pinfull is a customized Pinless fork. On an image or GIF, its blue strip or **G while hovering** opens Google Lens; on a video, the blue strip opens the pin page. Both apps work independently. Pinfull's Google Lens image links can use Bravely's image-upload route without configuring a local server address in the extension.
 
 **Status: public development preview, version 0.14.0.** This repository was extracted from the working Lens Wall extension. It is not a verified public release. See [release preparation](docs/RELEASE_PREPARATION.md) and [source provenance](NOTICE.md).
+
+## In action
+
+These owner-supplied screenshots show the wall experience on all four supported sites, using non-adult Pokémon artwork. They illustrate the browsing layout; they are not a full test of every action in this development preview. Website results can change, and Bravely does not filter adult content.
+
+### Pinterest
+
+Pikachu search results in the dark image wall.
+
+![Pinterest Pikachu search displayed as a dark image wall](docs/screenshots/pinterest.png)
+
+### Google Lens
+
+Visual matches in the wall view, continuing the image-search workflow from Pinfull.
+
+![Google Lens visual matches showing Pikachu and Eevee in the image wall](docs/screenshots/google-lens.png)
+
+### DeviantArt
+
+Pikachu search results with the simplified wall layout.
+
+![DeviantArt Pikachu search results in a simplified dark wall](docs/screenshots/deviantart.png)
+
+### pixiv
+
+An artwork page with a large image and related works below it.
+
+![pixiv Pikachu artwork page with a large image above related works](docs/screenshots/pixiv.png)
+
+The artwork and website branding shown belong to their respective creators and owners. These screenshots demonstrate the extension's layout and do not imply endorsement.
 
 ## Install in Brave
 
@@ -70,6 +100,6 @@ When reporting a bug, include the site/page type, whether you were signed in, Br
 - Some source pages cannot expose a larger image, and authenticated content still requires access on the source site.
 - Signed-in Pinterest panel and two-step visual-search behavior need a fresh installed-Bravely check.
 - pixiv and DeviantArt need broader authenticated scrolling checks; earlier Lens Wall results are recorded separately from this renamed copy.
-- Screenshots, final artwork/icons, license selection and provenance review remain preparation work.
+- Final extension artwork/icons, license selection and provenance review remain preparation work.
 
 No public release tag is provided by this preparation snapshot.

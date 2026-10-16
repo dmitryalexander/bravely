@@ -1,0 +1,71 @@
+/* Bravely look for Pinterest (Bravely 0.9).
+   Applies while <html> has the "pw-pinless" class (set by pinterest-look.js).
+   Ctrl+Shift+X on Pinterest, or the extension's options page, turns it off and on. */
+
+/* 1. Dark page like Pinless (#121212). Pinterest takes its colors from these variables. */
+:root.pw-pinless{color-scheme:dark;
+--sema-color-background-default:#121212;--sema-color-background-secondary:#222;--sema-color-background-tertiary:#3a3a3a;--sema-color-background-subtle:#1a1a1a;--sema-color-background-disabled:#2a2a2a;--sema-color-background-selected:#5a5a5a;--sema-color-background-inverse:#3d3d3d;--sema-color-background-neutral-weak:#1e1e1e;
+--sema-color-background-elevated-opaque-default:#262626;--sema-color-background-elevated-opaque-secondary:#333;--sema-color-background-elevated-opaque-tertiary:#4a4a4a;--sema-color-background-elevated-opaque-subtle:#1e1e1e;
+--sema-color-background-elevated-wash-70-default:rgba(18,18,18,.7);--sema-color-background-elevated-wash-50-default:rgba(18,18,18,.5);--sema-color-background-elevated-wash-70-inverse:hsla(60,20%,98%,.7);--sema-color-background-elevated-wash-50-inverse:hsla(60,20%,98%,.5);
+--sema-color-background-elevated-scrim-opaque:linear-gradient(180deg,rgba(18,18,18,.85) 40%,rgba(18,18,18,.85));
+--sema-color-hover-background-default:#1c1c1c;--sema-color-hover-background-secondary:#2e2e2e;--sema-color-hover-background-tertiary:#474747;--sema-color-hover-background-subtle:#242424;--sema-color-hover-background-selected:#666;--sema-color-hover-background-inverse:#4a4a4a;--sema-color-hover-background-neutral-weak:#262626;
+--sema-color-hover-background-elevated-opaque-default:#303030;--sema-color-hover-background-elevated-opaque-secondary:#3c3c3c;--sema-color-hover-background-elevated-opaque-tertiary:#555;--sema-color-hover-background-elevated-opaque-subtle:#282828;
+--sema-color-hover-background-elevated-wash-70-default:rgba(30,30,30,.7);--sema-color-hover-background-elevated-wash-50-default:rgba(30,30,30,.5);--sema-color-hover-background-elevated-scrim-opaque:linear-gradient(180deg,rgba(30,30,30,.85),rgba(30,30,30,.85));
+--sema-color-pressed-background-default:#222;--sema-color-pressed-background-secondary:#383838;--sema-color-pressed-background-tertiary:#505050;--sema-color-pressed-background-subtle:#2a2a2a;--sema-color-pressed-background-selected:#707070;--sema-color-pressed-background-inverse:#555;--sema-color-pressed-background-neutral-weak:#2c2c2c;
+--sema-color-pressed-background-elevated-opaque-default:#383838;--sema-color-pressed-background-elevated-opaque-secondary:#444;--sema-color-pressed-background-elevated-opaque-tertiary:#5c5c5c;--sema-color-pressed-background-elevated-opaque-subtle:#2e2e2e;
+--sema-color-pressed-background-elevated-wash-70-default:rgba(40,40,40,.7);--sema-color-pressed-background-elevated-wash-50-default:rgba(40,40,40,.5);--sema-color-pressed-background-elevated-scrim-opaque:linear-gradient(180deg,rgba(40,40,40,.85),rgba(40,40,40,.85));
+--sema-color-text-default:#f2f2f2;--sema-color-text-subtle:#a9a9a9;--sema-color-text-neutral:#c9c9c9;--sema-color-text-disabled:#6b6b6b;--sema-color-text-link:#8ab4f8;
+--sema-color-hover-text-default:#fff;--sema-color-hover-text-subtle:#c4c4c4;--sema-color-hover-text-neutral:#dedede;--sema-color-hover-text-link:#a8c7fa;
+--sema-color-pressed-text-default:#d9d9d9;--sema-color-pressed-text-subtle:#b5b5b5;--sema-color-pressed-text-neutral:#cfcfcf;--sema-color-pressed-text-link:#7aa5f0;
+--sema-color-icon-default:#f2f2f2;--sema-color-icon-subtle:#a9a9a9;--sema-color-icon-neutral:#a9a9a9;--sema-color-icon-disabled:#6b6b6b;--sema-color-icon-link:#8ab4f8;
+--sema-color-hover-icon-default:#fff;--sema-color-hover-icon-subtle:#c4c4c4;--sema-color-hover-icon-neutral:#c4c4c4;
+--sema-color-pressed-icon-default:#d9d9d9;--sema-color-pressed-icon-subtle:#b5b5b5;--sema-color-pressed-icon-neutral:#b5b5b5;
+--sema-color-border-decorative:#333;--sema-color-border-interactive:#6b6b6b;--sema-color-border-disabled:#333;--sema-color-border-selected:#ededed;
+--sema-color-hover-border-decorative:#444;--sema-color-hover-border-interactive:#8a8a8a;--sema-color-hover-border-selected:#fff;
+--sema-color-pressed-border-decorative:#4a4a4a;--sema-color-pressed-border-interactive:#9a9a9a;--sema-color-pressed-border-selected:#ddd}
+html.pw-pinless,html.pw-pinless body{background:#121212!important;scrollbar-color:#5a5a5a #121212}
+html.pw-pinless [data-grid-item] [style*="background-color: rgb(239, 239, 239)"]{background-color:#1e1e1e!important}
+
+/* 2. No side bar. Pinterest's left menu waits off-screen and slides in when the mouse touches the left edge. */
+html.pw-pinless #VerticalNavContent{transform:translateX(calc(-100% + 6px));opacity:0;transition:transform .15s ease,opacity .15s ease}
+html.pw-pinless #VerticalNavContent:hover,html.pw-pinless #VerticalNavContent:focus-within{transform:none;opacity:1;box-shadow:0 0 24px rgba(0,0,0,.6)}
+@media (prefers-reduced-motion:reduce){html.pw-pinless #VerticalNavContent{transition:none}}
+/* ...and the page stops leaving room for it (pinterest-look.js catches any other spacing). */
+html.pw-pinless [style*="padding-left: 72px"]{padding-left:0!important}
+html.pw-pinless [style*="margin-left: 72px"]{margin-left:0!important}
+html.pw-pinless [style^="left: 72px"],html.pw-pinless [style*="; left: 72px"]{left:0!important}
+
+/* 3. Only images: no filter/tab bar above the wall, nothing under the pins. */
+html.pw-pinless [data-test-id="scrollable-one-bar-root"],
+html.pw-pinless [data-test-id="homefeed-tuner"],
+html.pw-pinless [data-test-id="pinrep-footer"]{display:none!important}
+
+/* 4. Tight wall with 4px gaps. Each tile grows 6px into the gap on both sides, and Pinterest measures
+      each tile 12px shorter than it looks, so its own layout leaves 4px below it too.
+      Pinterest still places, loads and links every pin itself, so scrolling and loading are unchanged. */
+html.pw-pinless [data-grid-item] > *{display:flow-root!important;margin-left:-6px!important;margin-right:-6px!important}
+html.pw-pinless [data-grid-item] > *::after{content:"";display:block;margin-top:-12px}
+
+/* 5. Pin pages: only the pin's image, no panel beside it (likes, Save, comments, "Add a comment").
+      pinterest-pin.js marks <html> with data-pw-solo and gives the pin as many columns as its image
+      fills (--pw-solo-w); Pinterest's wall then moves the related pins up into the panel's place.
+      The panel comes back with the rest of Pinterest when the look is off (Ctrl+Shift+X). */
+html.pw-pinless[data-pw-solo] [data-test-id="CloseupMainPin"]{width:var(--pw-solo-w,50%)!important;max-width:100%!important}
+html.pw-pinless[data-pw-solo] [data-test-id="CloseupMainPin"] div:has([data-test-id="CloseupDetails"]):not(:has([data-test-id="pin-closeup-image"],[data-test-id="closeup-container"],video)){display:none!important}
+html.pw-pinless[data-pw-solo] [data-test-id="CloseupMainPin"] div:has([data-test-id="pin-closeup-image"],[data-test-id="closeup-container"],video){border:0!important;border-radius:0!important;padding:0!important;box-shadow:none!important}
+
+/* Signed-in closeups, including regional Pinterest subdomains. */
+html.pw-pinless[data-pw-solo] [data-test-id="closeup-body-style"]{width:var(--pw-solo-w,auto)!important;max-width:100%!important;min-width:0!important;border:0!important;border-radius:0!important;padding:0!important;box-shadow:none!important}
+html.pw-pinless[data-pw-solo] [data-test-id="closeup-body-style"] [data-test-id="description-content-container"],
+html.pw-pinless[data-pw-solo] [data-test-id="closeup-action-bar"],
+html.pw-pinless[data-pw-solo] [data-test-id="metadataless-closeup-action-bar"]{display:none!important}
+html.pw-pinless[data-pw-solo] [data-test-id="closeup-body-style"] [data-test-id="closeup-media-container"]{width:100%!important;max-width:100%!important;min-width:0!important;flex-shrink:1!important;border:0!important;border-radius:0!important}
+
+/* Image-only closeup: use browser Back instead of the floating page arrow. */
+html.pw-pinless [data-test-id="back-button"],
+html.pw-pinless [data-test-id="closeup-back-button"],
+html.pw-pinless [data-test-id="backButton"],
+html.pw-pinless[data-pw-solo] button[aria-label="Back" i],
+html.pw-pinless[data-pw-solo] button[aria-label="Go back" i],
+html.pw-pinless[data-pw-solo] [role="button"][aria-label="Back" i],
+html.pw-pinless[data-pw-solo] button:has(svg[aria-label="Arrow back" i]){display:none!important}

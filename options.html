@@ -1,0 +1,22 @@
+<!doctype html><meta charset="utf-8"><title>Bravely options</title>
+<style>body{font:15px/1.5 system-ui,sans-serif;background:#181818;color:#eee;max-width:560px;margin:40px auto;padding:0 16px}
+input,select{width:100%;box-sizing:border-box;padding:10px;border-radius:8px;border:1px solid #555;background:#242522;color:#eee;font:inherit}
+label{display:block;margin:18px 0 6px}button{margin-top:16px;padding:9px 16px;border-radius:20px;border:1px solid #666;background:#383838;color:#fff;font:inherit;cursor:pointer}
+small{color:#aaa}</style>
+<h1>Bravely</h1>
+<p>A visual browsing companion to Pinfull. These switches control the look on each site.</p>
+<label><input type="checkbox" id="pinless" style="width:auto"> Bravely look on Pinterest (dark, tight image wall, no side bar, no panel next to a pin)</label>
+<small>Ctrl+Shift+X on Pinterest switches it too. Open Pinterest tabs reload when it changes.</small><br>
+<label><input type="checkbox" id="daLook" style="width:auto"> Bravely look on DeviantArt (dark, tight picture wall, nothing on the pictures, art pages without the side panel)</label>
+<small>Ctrl+Shift+X on DeviantArt switches it too. Open DeviantArt tabs reload when it changes.</small><br>
+<label for="daBlue">Blue strip on DeviantArt opens</label>
+<select id="daBlue"><option value="lens">the picture in Google Lens</option><option value="artist">the artist's gallery</option></select>
+<small>The red strip always opens the full-size picture.</small><br>
+<label><input type="checkbox" id="pxLook" style="width:auto"> Bravely look on pixiv (dark, tight picture wall, nothing on the pictures, artwork pages with only the picture)</label>
+<small>Ctrl+Shift+X on pixiv switches it too. Open pixiv tabs reload when it changes.</small><br>
+<label for="pxBlue">Blue strip on pixiv opens</label>
+<select id="pxBlue"><option value="lens">the picture in Google Lens</option><option value="artist">the artist's works</option></select>
+<small>The red strip always opens the original picture.</small><br>
+<label><input type="checkbox" id="debug" style="width:auto"> Log card markup to the console (for troubleshooting)</label>
+<button id="save">Save</button> <span id="msg" role="status"></span>
+<script src="options.js"></script>

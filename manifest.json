@@ -1,0 +1,145 @@
+{
+  "manifest_version": 3,
+  "name": "Bravely",
+  "version": "0.13.0",
+  "description": "Dark image walls for Google Lens, Pinterest, DeviantArt and pixiv. Full-size images and Lens search. A Pinfull companion.",
+  "permissions": [
+    "storage",
+    "declarativeNetRequest"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.google.com/search*",
+        "https://lens.google.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "wall.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://*.pinterest.com/*"
+      ],
+      "js": [
+        "pinterest-look.js"
+      ],
+      "css": [
+        "pinterest-look.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://*.pinterest.com/*"
+      ],
+      "js": [
+        "pinterest-pin.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://*.pinterest.com/*"
+      ],
+      "js": [
+        "pinterest.js"
+      ],
+      "css": [
+        "pinterest.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://*.deviantart.com/*"
+      ],
+      "js": [
+        "deviantart-images.js",
+        "deviantart-look.js"
+      ],
+      "css": [
+        "deviantart-look.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://*.deviantart.com/*"
+      ],
+      "js": [
+        "deviantart.js"
+      ],
+      "css": [
+        "deviantart.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.pixiv.net/*",
+        "https://pixiv.net/*"
+      ],
+      "js": [
+        "pixiv-data.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.pixiv.net/*",
+        "https://pixiv.net/*"
+      ],
+      "js": [
+        "pixiv-images.js",
+        "pixiv-look.js"
+      ],
+      "css": [
+        "pixiv-look.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.pixiv.net/*",
+        "https://pixiv.net/*"
+      ],
+      "js": [
+        "pixiv.js"
+      ],
+      "css": [
+        "pixiv.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": [
+    "https://*/*",
+    "http://localhost/*",
+    "http://127.0.0.1/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "submit.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "version_name": "0.13.0 preparation preview"
+}

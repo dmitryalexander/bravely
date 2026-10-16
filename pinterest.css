@@ -1,0 +1,35 @@
+/* Pinterest wall: square corners, quiet strips (red = full size, blue = Google Lens). */
+[data-test-id^="pincard-"],[data-grid-item] div,[data-grid-item] a,[data-grid-item] img,
+[data-test-id="pin-closeup-image"],[data-test-id="pin-closeup-image"] *,[data-test-id="closeup-body"] img,
+[data-test-id="pinWrapper"],[data-test-id="pinWrapper"] *,img[src*="pinimg.com"]{
+  border-radius:0!important;clip-path:none!important}
+.pw-ov{position:fixed;z-index:2147483000;pointer-events:none;box-sizing:border-box;margin:0;padding:0}
+.pw-ov[hidden]{display:none!important}
+.pw-ov a{position:absolute;left:0;width:100%;display:block;margin:0;padding:0;border:0;background:transparent;cursor:pointer;pointer-events:auto;text-decoration:none}
+.pw-ov .pw-full{top:0;height:10%;min-height:28px}
+.pw-ov .pw-lens{top:max(10%,28px);height:10%;min-height:28px}
+.pw-ov a:focus-visible{outline:none}
+.pw-ov::after{content:'';position:absolute;inset:0;border:2px solid transparent;pointer-events:none;box-sizing:border-box}
+.pw-ov:has(.pw-full:hover)::after,.pw-ov:has(.pw-full:focus-visible)::after{border-color:#b96170}
+.pw-ov:has(.pw-lens:hover)::after,.pw-ov:has(.pw-lens:focus-visible)::after{border-color:#608faf}
+#pw-search-notice{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:2147483100;padding:12px 18px;border-radius:8px;background:#262626;color:#fff;font:14px/1.4 system-ui,sans-serif;box-shadow:0 2px 12px #0006;pointer-events:none}
+#pw-search-notice[hidden]{display:none!important}
+
+/* Keep image cards quiet, including controls added when hovering or scrolling. */
+html.pw-pinless [data-pw-native-action],
+html.pw-pinless :is([data-grid-item],[data-test-id="pinWrapper"],[data-test-id="pin"],[data-test-id="CloseupMainPin"],[data-test-id="closeup-body-style"]) :is(
+  [data-test-id="PinBetterSaveButton"],
+  [data-test-id="pin-save-button"],
+  [data-test-id="pinrep-save-button"],
+  [data-test-id="pin-hover-save-button"],
+  [data-test-id="pinrep-source-link"],
+  [data-test-id="pin-visit-button"],
+  [data-test-id="pinrep-visit-button"],
+  [data-test-id="pin-share-button"],
+  [data-test-id="pinrep-share-button"],
+  [data-test-id="send-pin-button"],
+  button[aria-label="Save" i],
+  button[aria-label="Share" i],
+  button[aria-label="Send" i],
+  a[aria-label="Visit site" i]
+){display:none!important;pointer-events:none!important}

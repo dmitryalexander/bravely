@@ -1,0 +1,94 @@
+/* Bravely look for DeviantArt (Bravely 0.11).
+   Applies while <html> has the "pw-da" class (set by deviantart-look.js).
+   Ctrl+Shift+X on DeviantArt, or the extension's options page, turns it off and on. */
+
+/* 1. Dark page like Pinless (#121212) everywhere, also on artists' pages that use the light theme.
+      DeviantArt takes its colours from these variables. */
+html.pw-da body,html.pw-da .theme-dark,html.pw-da .theme-light{color-scheme:dark;
+--g-bg-primary:#121212!important;--g-bg-primary-rgb:18,18,18!important;--g-bg-secondary:#1e1e1e!important;--g-bg-secondary-rgb:30,30,30!important;--g-bg-tertiary:#262626!important;--g-bg-tertiary-rgb:38,38,38!important;
+--g-theme-primary:#121212!important;--g-theme-primary-rgb:18,18,18!important;--g-theme-secondary:#1e1e1e!important;--g-theme-secondary-rgb:30,30,30!important;--g-theme-tertiary:#262626!important;--g-theme-tertiary-rgb:38,38,38!important;
+--g-theme-primary-opposite:#f2f2f2!important;--g-theme-primary-opposite-rgb:242,242,242!important;--g-theme-secondary-opposite:#c9c9c9!important;--g-theme-secondary-opposite-rgb:201,201,201!important;
+--g-typography-primary:#f2f2f2!important;--g-typography-secondary:#c9c9c9!important;
+--g-card-bg:#1e1e1e!important;--g-card-bg-selected:#1e1e1e!important;--g-card-border:#3a3a3a!important;--g-card-border-hover:#4a4a4a!important;
+--g-divider:#262626!important;--g-divider1:#4a4a4a!important;--g-divider2:#262626!important;--g-divider3:#3a3a3a!important;--g-outline:#262626!important;
+--g-input-bg:#1e1e1e!important;--g-input-bg-disabled:#121212!important;--g-input-border:#3a3a3a!important;--g-input-border-disabled:#262626!important;--g-input-border-hover:#4a4a4a!important;--g-input-border-focus:#8a8a8a!important;
+--g-overlay-color-rgb:18,18,18!important;--g-overlay-primary-color-rgb:18,18,18!important;--g-overlay-secondary-color-rgb:30,30,30!important;--g-overlay-tertiary-color-rgb:38,38,38!important;--g-ftue-overlay:rgba(18,18,18,.8)!important;
+--g-placeholder-gradient:linear-gradient(225deg,#2a2a2a 0%,#1e1e1e 100%)!important;
+--g-primary-surface-element-bg-highlight:#121212!important;--g-primary-surface-element-bg-highlight-strong:#1e1e1e!important;--g-surface-element-bg-highlight:#121212!important;--g-surface-element-bg-highlight-strong:#1e1e1e!important;
+--g-secondary-surface-bg:#1e1e1e!important;--g-secondary-surface-border:#262626!important;--g-secondary-surface-element-bg-highlight:#222!important;--g-secondary-surface-element-bg-highlight-strong:#262626!important;
+--g-tertiary-surface-bg:#262626!important;--g-tertiary-surface-border:#4a4a4a!important;--g-tertiary-surface-element-bg-highlight:#2e2e2e!important;--g-tertiary-surface-element-bg-highlight-strong:#333!important;
+--g-stroke-default:#3a3a3a!important;--g-stroke-default-on-primary:#3a3a3a!important;--g-stroke-default-on-secondary:#3a3a3a!important;--g-stroke-default-on-tertiary:#4a4a4a!important;--g-stroke-hover:#5f5f5f!important;
+--g-stroke-strong:#4a4a4a!important;--g-stroke-strong-on-primary:#4a4a4a!important;--g-stroke-strong-on-secondary:#5f5f5f!important;--g-stroke-strong-on-tertiary:#5f5f5f!important;
+--g-stroke-subtle:#262626!important;--g-stroke-subtle-on-primary:#262626!important;--g-stroke-subtle-on-secondary:#3a3a3a!important;--g-stroke-subtle-on-tertiary:#3a3a3a!important;
+--g-scrollbar-thumb:#5a5a5a!important;--default-banner-strip-bg:#4a4a4a!important;--g-error-secondary:#4d040a!important;
+--g-brand:#00e59b!important;--g-brand-hover:#00c787!important;--g-success:#00e59b!important;--g-warning-primary:#ffb35c!important;--g-core-generic:#ff815f!important}
+html.pw-da,html.pw-da body{background:#121212!important;scrollbar-color:#5a5a5a #121212}
+html.pw-da header[role="banner"]{background:#121212!important;box-shadow:none!important;border-color:#262626!important}
+
+/* 2. Quiet header: Shop, AI video, Core and DreamUp promotions are hidden. Search and menus stay. */
+html.pw-da header[role="banner"] a[href$="/shop"],html.pw-da header[role="banner"] a[href*="/studio/"],
+html.pw-da header[role="banner"] a[href*="core-membership"],html.pw-da header[role="banner"] a[href*="/dreamup"],
+html.pw-da header[role="banner"]>div:empty,html.pw-da [data-pw-promo]{display:none!important}
+/* The same promotions in a page's own heading bar (Home: "Create AI Art", "Try Video Creator", "Sell Your Art"; join prompts when logged out). */
+html.pw-da main header a[href*="/dreamup"],html.pw-da main header a[href*="/studio/"],html.pw-da main header a[href*="/shop"],
+html.pw-da main header a[href*="core-membership"],html.pw-da main header a[href*="joinpoint="]{display:none!important}
+
+/* 2b. One top row: only the search box on the left, then DeviantArt's topic chips ("All", "Anime and Manga", ...)
+       in a row to its right. No toolbar down the left side. The rest of the header (notifications, messages,
+       your menu, Submit) and the left toolbar come back with the look off (Ctrl+Shift+X).
+       deviantart-look.js marks: data-pw-search = search box found, data-pw-chips = DeviantArt's chips (copied into
+       #pw-topics next to the search box), data-pw-rail = left toolbar. */
+html.pw-da{--pw-search-w:300px}
+html.pw-da[data-pw-search] header[role="banner"]{justify-content:flex-start!important;padding-left:16px!important;padding-right:16px!important;column-gap:0!important}
+html.pw-da[data-pw-search] header[role="banner"]>:not(:has(#search-input)){display:none!important}
+html.pw-da[data-pw-search] header[role="banner"]>:has(#search-input){flex:0 0 var(--pw-search-w)!important;width:var(--pw-search-w)!important;max-width:none!important;margin:0!important}
+html.pw-da[data-pw-search] header[role="banner"] :has(>#search-input){width:100%!important;max-width:none!important}
+html.pw-da[data-pw-search] [data-pw-chips]{display:none!important}
+html.pw-da #pw-topics{position:fixed;top:0;left:calc(16px + var(--pw-search-w) + 12px);right:16px;height:var(--pw-top-h,55px);z-index:21;display:flex;align-items:center;gap:4px;box-sizing:border-box}
+html.pw-da:not([data-pw-search]) #pw-topics{display:none}
+html.pw-da #pw-topics .pw-topics-row{display:flex!important;align-items:center!important;gap:8px!important;flex:1 1 auto!important;min-width:0!important;width:auto!important;height:100%!important;margin:0!important;padding:0!important;overflow-x:auto!important;overflow-y:hidden!important;scrollbar-width:none;position:static!important}
+html.pw-da #pw-topics .pw-topics-row::-webkit-scrollbar{display:none}
+html.pw-da #pw-topics .pw-topics-row>a{flex:none!important}
+html.pw-da #pw-topics .pw-topics-go{flex:none;width:32px;height:38px;padding:0;border:1px solid #3a3a3a;border-radius:8px;background:#1e1e1e;color:#f2f2f2;font:22px/1 system-ui,sans-serif;cursor:pointer}
+html.pw-da #pw-topics .pw-topics-go:hover{background:#2e2e2e}
+html.pw-da #pw-topics .pw-topics-go[hidden]{display:none}
+html.pw-da [data-pw-rail]{display:none!important}
+html.pw-da [data-pw-rail-grid]{display:block!important}
+html.pw-da [data-pw-rail-grid]>:not([data-pw-rail]){width:auto!important;max-width:none!important;margin-left:0!important}
+html.pw-da main header h1~button[aria-haspopup="menu"]{display:none!important}
+
+/* 2c. No heading bar under the top row (Bravely 0.12): the page's own bar with its title ("Home") is hidden, so the
+       wall starts right under the top row. A sort menu in it ("Relevance" on tag pages) sits at the right end of the
+       top row instead. deviantart-look.js marks: data-pw-titlebar = a bar with only a title, data-pw-sortbar = a bar
+       with a sort menu, data-pw-sort on <html> = the top row leaves room for that menu. */
+html.pw-da[data-pw-search] [data-pw-titlebar]{display:none!important}
+html.pw-da[data-pw-search] [data-pw-sortbar]{position:fixed!important;top:0!important;right:16px!important;left:auto!important;bottom:auto!important;width:auto!important;min-width:0!important;max-width:none!important;
+  height:var(--pw-top-h,55px)!important;min-height:0!important;margin:0!important;padding:0!important;z-index:22!important;display:flex!important;align-items:center!important;gap:8px!important;
+  background:transparent!important;border:0!important;box-shadow:none!important;transform:none!important}
+html.pw-da[data-pw-search] [data-pw-sortbar]>:not(:has([aria-haspopup="listbox"])){display:none!important}
+html.pw-da[data-pw-search] [data-pw-sortbar] :is(h1,h2){display:none!important}
+html.pw-da[data-pw-search] [data-pw-sortbar] *{margin-top:0!important;margin-bottom:0!important}
+html.pw-da[data-pw-search][data-pw-sort] #pw-topics{right:calc(16px + var(--pw-sort-w,150px))}
+
+/* 3. Brick wall like Pinless: equal columns, 4px gaps, each picture in the shortest column, nothing on the
+      pictures. DeviantArt still loads and links every picture; deviantart-look.js marks its own elements:
+      data-pw-wall = the wall, data-pw-flat = DeviantArt's rows (no longer boxes), data-pw-tile = one picture. */
+html.pw-da [data-pw-wall]{display:block!important;position:relative!important;height:var(--pw-wall-h,auto)!important;width:auto!important;max-width:none!important;margin:0!important;padding:0!important;contain:none!important}
+html.pw-da [data-pw-wall-box]{width:auto!important;max-width:100%!important}
+html.pw-da [data-pw-wall] [data-pw-flat]{display:contents!important}
+html.pw-da [data-pw-wall] [data-pw-tile]{position:absolute!important;left:var(--pw-x,0px)!important;top:var(--pw-y,0px)!important;width:var(--pw-w,0px)!important;height:var(--pw-h,0px)!important;margin:0!important;padding:0!important;float:none!important;transform:none!important;overflow:hidden!important;box-sizing:border-box!important;background:#1e1e1e;border-radius:0!important}
+html.pw-da [data-pw-wall] [data-pw-tile] [data-pw-fill]{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;min-width:0!important;margin:0!important;padding:0!important;border-radius:0!important;transform:none!important}
+html.pw-da [data-pw-wall] [data-pw-tile] img[data-pw-fill]{object-fit:cover!important;object-position:50% 50%!important}
+html.pw-da [data-pw-wall] [data-pw-tile] [data-pw-chrome]{display:none!important}
+html.pw-da [data-pw-wall] [data-pw-tile] *{border-radius:0!important}
+
+/* 4. Art pages: only the picture, no panel beside it and nothing under it but more pictures.
+      The artist's other pictures and "More like this" move under the picture as walls.
+      The panel, description and comments come back with the rest of DeviantArt when the look is off (Ctrl+Shift+X). */
+html.pw-da[data-pw-art] [data-pw-art-hide]{display:none!important}
+html.pw-da[data-pw-art] [data-pw-art-stage] div:empty{background-image:none!important}
+html.pw-da[data-pw-art] [data-pw-art-box]{width:100%!important;max-width:none!important}
+html.pw-da[data-pw-art] [data-pw-art-layout]{display:flex!important;flex-direction:column!important;align-items:stretch!important;max-width:none!important}
+html.pw-da[data-pw-art] [data-pw-art-stage],html.pw-da[data-pw-art] [data-pw-art-side]{width:auto!important;max-width:none!important;min-width:0!important;flex:none!important;margin:0!important;position:static!important;top:auto!important;height:auto!important;max-height:none!important;overflow:visible!important}
+html.pw-da[data-pw-art] [data-pw-art-side]{padding:4px 40px 40px!important;background:none!important;border:0!important;box-shadow:none!important}
+html.pw-da[data-pw-art] [data-pw-art-side]>*,html.pw-da[data-pw-art] [data-pw-art-side]>*>*{width:auto!important;max-width:none!important;margin:0 0 4px!important;padding:0!important;background:none!important;border:0!important;box-shadow:none!important}

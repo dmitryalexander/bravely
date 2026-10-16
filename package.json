@@ -1,0 +1,10 @@
+{
+  "name": "bravely",
+  "version": "0.13.0",
+  "private": true,
+  "description": "Visual browsing extension for Brave and companion to Pinfull",
+  "scripts": {
+    "test": "node scripts/check.cjs"
+  },
+  "engines": { "node": ">=22" }
+}

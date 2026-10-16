@@ -1,0 +1,94 @@
+/* Bravely look for pixiv (Bravely 0.12).
+   Applies while <html> has the "pw-px" class (set by pixiv-look.js).
+   Ctrl+Shift+X on pixiv, or the extension's options page, turns it off and on. */
+
+/* 1. Dark page like Pinless (#121212), also for pixiv's light theme. pixiv takes its colours from these variables. */
+html.pw-px,html.pw-px [data-theme]{color-scheme:dark;
+--charcoal-background1:#121212!important;--charcoal-background1-hover:#2a2a2a!important;--charcoal-background1-press:#333!important;
+--charcoal-background2:#121212!important;--charcoal-background2-hover:#1e1e1e!important;--charcoal-background2-press:#2a2a2a!important;
+--charcoal-surface1:#1e1e1e!important;--charcoal-surface1-hover:#2a2a2a!important;--charcoal-surface1-press:#333!important;
+--charcoal-surface2:rgba(0,0,0,.16)!important;--charcoal-surface3:rgba(255,255,255,.1)!important;--charcoal-surface3-hover:rgba(255,255,255,.18)!important;
+--charcoal-surface4:rgba(0,0,0,.32)!important;--charcoal-surface6:rgba(255,255,255,.1)!important;--charcoal-surface7:rgba(0,0,0,0)!important;
+--charcoal-surface8:rgba(0,0,0,.88)!important;--charcoal-surface9:#333!important;--charcoal-surface10:rgba(255,255,255,.2)!important;
+--charcoal-text1:#f2f2f2!important;--charcoal-text2:#c9c9c9!important;--charcoal-text3:#8a8a8a!important;--charcoal-text4:#5c5c5c!important;--charcoal-text5:#f5f5f5!important;
+--charcoal-border:#262626!important;--charcoal-border-default:#262626!important;--charcoal-link1:#8ab4f8!important;--charcoal-link2:rgba(255,255,255,.36)!important}
+html.pw-px,html.pw-px body{background:#121212!important;scrollbar-color:#5a5a5a #121212}
+
+/* 2. No side menu: it slides out when the mouse touches the very left edge of the screen.
+      No advertisement or sign-up box under the header, no "Send feedback" (pixiv-look.js: data-pw-out). */
+html.pw-px .__top_side_menu_body{margin-left:0!important}
+html.pw-px :has(> .__top_side_menu_root){position:fixed!important;left:0!important;top:0!important;bottom:0!important;width:232px!important;height:auto!important;z-index:60!important;
+  transform:translateX(calc(-100% + 8px))!important;transition:transform .15s ease .15s;background:#121212!important;overflow:hidden!important}
+html.pw-px :has(> .__top_side_menu_root):hover{transform:none!important;box-shadow:4px 0 18px rgba(0,0,0,.6)}
+html.pw-px :has(> .__top_side_menu_root)>:not(.__top_side_menu_root){display:none!important}
+html.pw-px .__top_side_menu_root{transform:none!important;width:232px!important;min-width:232px!important;height:100%!important;background:#121212!important;padding-top:8px!important;box-sizing:border-box}
+html.pw-px .__premium_banner,html.pw-px [data-pw-out]{display:none!important}
+
+/* 3. One top row: only the search box on the left, then pixiv's tag chips (copied into #pw-topics) to its right.
+      The rest of the header (notifications, messages, your menu, Post) comes back with the look off (Ctrl+Shift+X).
+      pixiv-look.js marks: data-pw-head-box = the header, data-pw-head = its row, data-pw-search-col = the search part,
+      data-pw-chips = pixiv's own chip row (hidden; its copy is in the top row). */
+html.pw-px{--pw-search-w:400px}
+html.pw-px [data-pw-head-box]{position:sticky!important;top:0!important;z-index:40!important;background:#121212!important}
+html.pw-px[data-pw-search] [data-pw-head]{display:flex!important;justify-content:flex-start!important;align-items:center!important;gap:0!important;padding:0 16px!important;background:#121212!important;top:0!important;box-shadow:none!important}
+html.pw-px[data-pw-search] [data-pw-head]>:not([data-pw-search-col]){display:none!important}
+html.pw-px[data-pw-search] [data-pw-search-col]{display:block!important;flex:0 0 var(--pw-search-w)!important;width:var(--pw-search-w)!important;max-width:none!important;margin:0!important}
+html.pw-px[data-pw-search] [data-pw-search-col]>:not(:has(form)){display:none!important}
+html.pw-px[data-pw-search] [data-pw-chips]{display:none!important}
+html.pw-px #pw-topics{position:fixed;top:0;left:calc(16px + var(--pw-search-w) + 12px);right:16px;height:var(--pw-top-h,64px);z-index:41;display:flex;align-items:center;gap:4px;box-sizing:border-box;pointer-events:none}
+html.pw-px:not([data-pw-search]) #pw-topics{display:none}
+html.pw-px #pw-topics>*{pointer-events:auto}
+html.pw-px #pw-topics .pw-topics-row{display:flex!important;align-items:center!important;gap:8px!important;flex:1 1 auto!important;min-width:0!important;width:auto!important;height:100%!important;margin:0!important;padding:0!important;overflow-x:auto!important;overflow-y:hidden!important;scrollbar-width:none;position:static!important;mask-image:none!important;transform:none!important}
+html.pw-px #pw-topics .pw-topics-row::-webkit-scrollbar{display:none}
+html.pw-px #pw-topics .pw-topics-row>*{flex:none!important;margin:0!important;position:static!important;transform:none!important}
+html.pw-px #pw-topics .pw-topics-go{flex:none;width:32px;height:40px;padding:0;border:1px solid #3a3a3a;border-radius:8px;background:#1e1e1e;color:#f2f2f2;font:22px/1 system-ui,sans-serif;cursor:pointer}
+html.pw-px #pw-topics .pw-topics-go:hover{background:#2e2e2e}
+html.pw-px #pw-topics .pw-topics-go[hidden]{display:none}
+
+/* 4. Pages with pictures: only the walls (and the artwork's picture). pixiv-look.js marks the boxes leading to
+      them (data-pw-path: no widths, margins or columns of their own, so the wall spans the page), hides
+      everything else (data-pw-hide) and keeps page numbers and short "Show all" links (data-pw-keep). */
+html.pw-px[data-pw-iso] .__top_side_menu_body{padding:4px 16px 32px!important;box-sizing:border-box!important}
+html.pw-px [data-pw-hide]{display:none!important}
+html.pw-px [data-pw-path]{display:block!important;width:auto!important;max-width:none!important;min-width:0!important;height:auto!important;min-height:0!important;max-height:none!important;
+  margin:0!important;padding:0!important;border:0!important;transform:none!important;overflow:visible!important;contain:none!important;gap:0!important;
+  mask-image:none!important;-webkit-mask-image:none!important;background:transparent!important;box-shadow:none!important;border-radius:0!important}
+html.pw-px [data-pw-keep]{display:flex!important;justify-content:center!important;margin:16px 0!important;padding:0!important;width:auto!important;max-width:none!important}
+html.pw-px [data-pw-keep] a,html.pw-px [data-pw-keep] button{max-width:280px!important}
+
+/* 5. Brick wall like Pinless: equal columns, 4px gaps, each picture in the shortest column at its real shape, nothing
+      on the pictures. data-pw-wall = a list of works, data-pw-tile = one work, data-pw-fill = the boxes around its
+      picture, data-pw-chrome = titles, names, hearts and badges (hidden), data-pw-off = what else sits in the list
+      (advertisements, novels, collections: hidden). The wall's height is a top padding, so whatever pixiv puts
+      after the pictures (its "load more" trigger) stays under them. */
+html.pw-px [data-pw-wall]{display:block!important;position:relative!important;height:auto!important;min-height:0!important;max-height:none!important;padding:var(--pw-wall-h,0px) 0 0!important;margin:0!important;
+  width:auto!important;max-width:none!important;min-width:0!important;overflow:visible!important;transform:none!important;contain:none!important;gap:0!important;border:0!important;
+  mask-image:none!important;-webkit-mask-image:none!important;box-sizing:content-box!important;list-style:none!important;background:transparent!important}
+html.pw-px [data-pw-wall]>[data-pw-tile]{position:absolute!important;left:var(--pw-x,0px)!important;top:var(--pw-y,0px)!important;width:var(--pw-w,0px)!important;height:var(--pw-h,0px)!important;
+  margin:0!important;padding:0!important;border:0!important;transform:none!important;overflow:hidden!important;box-sizing:border-box!important;background:#1e1e1e!important;border-radius:0!important;
+  max-width:none!important;min-width:0!important;max-height:none!important;min-height:0!important;flex:none!important;grid-area:auto!important;display:block!important;opacity:1!important;visibility:visible!important}
+html.pw-px [data-pw-wall] [data-pw-tile] [data-pw-fill]{display:block!important;position:static!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;min-width:0!important;min-height:0!important;
+  margin:0!important;padding:0!important;border:0!important;border-radius:0!important;transform:none!important;aspect-ratio:auto!important;inset:auto!important;float:none!important;background:transparent!important}
+html.pw-px [data-pw-wall] [data-pw-tile] [data-pw-fill]::before,html.pw-px [data-pw-wall] [data-pw-tile] [data-pw-fill]::after{display:none!important}
+html.pw-px [data-pw-wall] [data-pw-tile] img[data-pw-fill]{object-fit:cover!important;object-position:50% 50%!important;opacity:1!important;filter:none!important;transition:none!important}
+html.pw-px [data-pw-wall] [data-pw-tile] [data-pw-chrome],html.pw-px [data-pw-wall] [data-pw-off]{display:none!important}
+html.pw-px [data-pw-wall] [data-pw-tile] *{border-radius:0!important}
+html.pw-px #pw-more>div>a,html.pw-px #pw-more>div>a>img{display:block;width:100%;height:100%;object-fit:cover}
+html.pw-px #pw-more-status{display:flex;justify-content:center;align-items:center;gap:8px;margin:16px 0;color:#8a8a8a;font:14px/1.4 system-ui,sans-serif}
+html.pw-px #pw-more-status[hidden]{display:none!important}
+html.pw-px #pw-more-status button{padding:6px 14px;border:1px solid #3a3a3a;border-radius:16px;background:#1e1e1e;color:#f2f2f2;font:inherit;cursor:pointer}
+
+/* 6. Artwork pages: only the picture, centred and sized to fit the screen; the artist's works and "Related works"
+      become walls under it. Title, tags, likes, comments, the side panel and the advertisements are hidden; they
+      come back with the look off (Ctrl+Shift+X). Works with several pictures keep pixiv's "Show all" button. */
+html.pw-px[data-pw-art] [data-pw-art-pic]{display:block!important;width:auto!important;max-width:none!important;height:auto!important;min-height:0!important;max-height:none!important;margin:0 0 4px!important;padding:0!important;overflow:visible!important}
+html.pw-px[data-pw-art] [data-pw-art-pic] :is(div,a):has(img){display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;
+  width:auto!important;max-width:none!important;height:auto!important;min-height:0!important;max-height:none!important;margin:0!important;padding:0!important;position:relative!important;transform:none!important;overflow:visible!important;background:transparent!important}
+html.pw-px[data-pw-art] [data-pw-art-pic] img{display:block!important;width:auto!important;height:auto!important;max-width:100%!important;max-height:calc(100vh - var(--pw-top-h,64px) - 8px)!important;margin:0 auto!important;object-fit:contain!important}
+html.pw-px[data-pw-art] [data-pw-art-off]{display:none!important}
+html.pw-px[data-pw-art] [data-pw-art-bar],html.pw-px[data-pw-art] [data-pw-art-bar] [data-pw-path]{position:static!important;top:auto!important;bottom:auto!important}
+html.pw-px[data-pw-art] [data-pw-art-btn]{position:static!important;inset:auto!important;transform:none!important;display:flex!important;align-items:center!important;justify-content:center!important;
+  width:auto!important;min-width:160px!important;height:36px!important;margin:4px auto 8px!important;padding:0 20px!important;border:1px solid #3a3a3a!important;border-radius:18px!important;
+  background:#1e1e1e!important;color:#f2f2f2!important;font:14px/1 system-ui,sans-serif!important;cursor:pointer!important;opacity:1!important;visibility:visible!important}
+html.pw-px[data-pw-art] [data-pw-art-btn]:hover{background:#2e2e2e!important}
+html.pw-px[data-pw-art] [data-pw-art-btn] *{position:static!important;color:inherit!important;background:none!important}

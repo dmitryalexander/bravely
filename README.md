@@ -1,0 +1,68 @@
+# Bravely
+
+Bravely is a Brave extension for visual browsing on Google Lens, Pinterest, DeviantArt and pixiv. It turns supported pages into quiet, dark image walls with compact gaps, full-size image actions and visual-search shortcuts.
+
+It is the visual browsing companion to **Pinfull**, a customized Pinless fork. Both can run independently. Pinfull's Google Lens image links can use Bravely's image-upload route without configuring a local server address in the extension.
+
+**Status: private preparation preview, version 0.13.0.** This repository was extracted from the working Lens Wall extension. It is not a verified public release. See [release preparation](docs/RELEASE_PREPARATION.md) and [source provenance](NOTICE.md).
+
+## Install in Brave
+
+1. Clone or download this repository to a folder you will keep.
+2. Open `brave://extensions` and enable **Developer mode**.
+3. Select **Load unpacked** and choose the folder containing `manifest.json`.
+4. Open or refresh a supported website. Use **Details > Extension options** to change each site's look and image actions.
+
+For an installation archive on Windows, run `powershell -NoProfile -File scripts/Package.ps1`. Extract the generated `dist/bravely-0.13.0-unpacked.zip`, then load the extracted folder as above. The archive contains runtime files only.
+
+If you already have Lens Wall installed, disable that extension before enabling Bravely on the same sites. Running both can duplicate page modifications. Loading a separate unpacked folder normally creates a separate extension identity, so its settings may start from defaults. Keep the old copy until the new one has been checked.
+
+After an update, reload Bravely on `brave://extensions`, then refresh open website tabs. Removing the extension stops its modifications; refreshed pages return to the site's normal appearance.
+
+## Controls
+
+| Site | Action |
+| --- | --- |
+| Pinterest, DeviantArt, pixiv | `Ctrl+Shift+X` toggles Bravely's look and reloads the page. Avoid typing fields when using shortcuts. |
+| Pinterest | `Ctrl+Shift+Z` opens the hovered pin in the same tab, waits for its controls, then activates Pinterest visual search. In its crop view, it returns to the pin. |
+| DeviantArt | `Ctrl+Shift+Z` opens More Like This for the hovered/current artwork, or returns from that view. |
+| pixiv | `Ctrl+Shift+Z` opens/jumps to related works; on an artwork page it switches between the artwork and related works. |
+| Google Lens | Bravely selects Visual matches and displays an image wall. Google view / Wall switches views; `Ctrl+Shift+Z` opens the search-area editor or returns to the wall. |
+
+On supported images, the **red strip** opens a larger/original image in a new tab. The **blue strip** searches that image with Google Lens. DeviantArt and pixiv options can make the blue strip open the artist's gallery instead. Image size and availability depend on what the source allows; a thumbnail may remain when a larger image cannot be fetched.
+
+If a supported site looks completely normal, check its look switch first. The original DeviantArt artwork view was confirmed working after its disabled look was switched back on.
+
+## Permissions and data
+
+Bravely uses `storage` for extension preferences and `declarativeNetRequest` to route Lens uploads and supply pixiv's image-server referrer. Content scripts run on the supported Google Lens/search, Pinterest, DeviantArt and pixiv URLs listed in the manifest.
+
+The current preview retains broad HTTPS host access because full-size image discovery follows result pages and image hosts across the web. Loopback host access supports image URLs from local companion apps. These permissions need a final review before public release.
+
+Selecting a Lens action sends the selected image to Google Lens: Bravely fetches the image and submits it to Google's upload endpoint. Full-size actions can request a source page and candidate images to find a larger match. Website browsing, authentication and Google's processing are handled by those services. Debug logging is off by default; enabling it can print page markup in the browser console.
+
+The extension has no bundled account credentials or required Docker services. Preferences retain legacy internal storage keys for compatibility; the visible product name is Bravely. Retired Priviblur routing and its local-address option were removed in this preparation copy, so Tumblr results open their original source URLs.
+
+## Development
+
+Use Node.js 22 or newer. There are no npm dependencies to install.
+
+```sh
+npm test
+```
+
+The checks validate manifest references, JavaScript syntax, image URL helpers, Pinterest layout simulations and visual-search navigation. They do **not** replace testing the installed extension against real authenticated pages.
+
+Runtime files live at the repository root. `tests/` contains local regression checks; `scripts/` contains validation and packaging tools. The manifest defines which site scripts run and whether they run in the isolated or page world. Keep that order and execution-world distinction when changing the extension.
+
+When reporting a bug, include the site/page type, whether you were signed in, Bravely's version and look-switch state, the expected result, and a screenshot without private information.
+
+## Known limitations
+
+- Website layout changes can break wall recognition or image actions.
+- Some source pages cannot expose a larger image, and authenticated content still requires access on the source site.
+- Signed-in Pinterest panel and two-step visual-search behavior need a fresh installed-Bravely check.
+- pixiv and DeviantArt need broader authenticated scrolling checks; earlier Lens Wall results are recorded separately from this renamed copy.
+- Screenshots, final artwork/icons, license selection and provenance review remain preparation work.
+
+No public release tag is provided by this preparation snapshot.
